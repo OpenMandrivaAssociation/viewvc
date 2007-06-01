@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.0.4
-Release:        %mkrel 1
+Release:        %mkrel 2
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -9,7 +9,7 @@ URL:            http://www.viewvc.org/
 Source0:        http://www.viewvc.org/viewvc-%{version}.tar.gz
 Source1:        %{name}.README.mdv
 Patch0:         %{name}-tools.patch
-Patch1:         %{name}-1.0.config.patch
+Patch1:         %{name}-1.0.4-config.patch
 # speed up directory listing when paging (from trunk r1504)
 Patch2:         %{name}-r1504-view_directory_cheating.patch
 Requires:       apache
@@ -19,7 +19,7 @@ BuildRequires:  python
 Obsoletes:      viewcvs
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{epoch}:%{release}-root
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ViewVC is a browser interface for CVS and Subversion version control 
