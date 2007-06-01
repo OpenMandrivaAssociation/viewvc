@@ -16,7 +16,7 @@ Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
 BuildRequires:  python
-Obsoletes:      viewcvs
+Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
