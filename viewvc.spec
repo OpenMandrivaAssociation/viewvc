@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.0.4
-Release:        %mkrel 2
+Release:        %mkrel 3
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -16,6 +16,7 @@ Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
 BuildRequires:  python
+Requires:       python
 Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
