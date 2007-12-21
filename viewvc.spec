@@ -20,6 +20,7 @@ Requires:       python
 Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ViewVC is a browser interface for CVS and Subversion version control 
