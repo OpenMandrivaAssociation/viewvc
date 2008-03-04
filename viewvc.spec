@@ -1,6 +1,6 @@
 Name:           viewvc
-Version:        1.0.4
-Release:        %mkrel 3
+Version:        1.0.5
+Release:        %mkrel 1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
