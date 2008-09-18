@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.0.5
-Release:        %mkrel 4
+Release:        %mkrel 5
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -12,6 +12,9 @@ Patch0:         %{name}-tools.patch
 Patch1:         %{name}-1.0.4-config.patch
 # speed up directory listing when paging (from trunk r1504)
 Patch2:         %{name}-r1504-view_directory_cheating.patch
+# security issue 
+# http://viewvc.tigris.org/issues/show_bug.cgi?id=354
+Patch3:		%{name}-r1979.patch
 Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
@@ -55,6 +58,7 @@ Here are some of the additional features of ViewVC:
 %patch0 -p1
 %patch1 -p0
 %patch2 -p0
+%patch3 -p1
 %{__cp} -a %{SOURCE1} README.mdv
 
 %build
