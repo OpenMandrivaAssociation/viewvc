@@ -1,15 +1,15 @@
 Name:           viewvc
-Version:        1.0.7
-Release:        %mkrel 1
+Version:        1.1.0
+Release:        %mkrel 0.beta1.1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
 Group:          System/Servers
 URL:            http://www.viewvc.org/
-Source0:        http://www.viewvc.org/viewvc-%{version}.tar.gz
+Source0:        http://viewvc.tigris.org/files/documents/3330/44247/viewvc-1.1.0-beta1.tar.gz
 Source1:        %{name}.README.mdv
 Patch0:         %{name}-tools.patch
-Patch1:         %{name}-1.0.4-config.patch
+Patch1:         %{name}-1.1.0-config.patch
 Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
@@ -49,9 +49,9 @@ Here are some of the additional features of ViewVC:
       tweaks).
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-beta1
 %patch0 -p1
-%patch1 -p0
+%patch1 -p0 -b .config
 %{__cp} -a %{SOURCE1} README.mdv
 
 %build
@@ -122,7 +122,7 @@ EOF
 
 %files
 %defattr(-,root,root)
-%doc CHANGES README INSTALL TODO README.mdv
+%doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mdv docs/
 %config(noreplace) %{_sysconfdir}/%{name}
 %config(noreplace) %{_webappconfdir}/%{name}.conf
 %{_datadir}/%{name}
