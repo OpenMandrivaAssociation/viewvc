@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.1.3
-Release:        %mkrel 1
+Release:        %mkrel 2
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -116,6 +116,17 @@ Alias /%{name} %{_var}/www/%{name}
     Allow from 127.0.0.1
     ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf"
 </LocationMatch>
+
+<IfModule mod_python.c>
+    Alias /%{name}-mp %{_datadir}/%{name}/bin/mod_python/viewvc.py
+    <Directory %{_datadir}/%{name}/bin/mod_python>
+        AddHandler python-program .py
+        PythonHandler handler
+        Order allow,deny
+        Allow from 127.0.0.1
+        ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf"
+    </Directory>
+</IfModule>
 EOF
 
 # set mode 755 on executable scripts
