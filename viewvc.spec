@@ -109,6 +109,13 @@ Alias /%{name} %{_var}/www/%{name}
 <Directory %{_var}/www/%{name}>
     Allow from all
 </Directory>
+
+<LocationMatch "^/cgi-bin/(query|viewvc).cgi">
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1
+    ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf"
+</LocationMatch>
 EOF
 
 # set mode 755 on executable scripts
