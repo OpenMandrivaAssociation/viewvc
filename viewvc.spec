@@ -60,8 +60,8 @@ Here are some of the additional features of ViewVC:
 %{__rm} -rf %{buildroot}
 %{__python} ./viewvc-install --destdir=%{buildroot} --prefix=%{_datadir}/%{name}
 
-# remove mod_python files
-%{__rm} -r %{buildroot}%{_datadir}/%{name}/bin/mod_python
+# remove uneeded files
+%{__rm} -f %{buildroot}%{_datadir}/%{name}/bin/mod_python/.htaccess
 
 # fix python files perms and shellbang
 %{__perl} -pi \
