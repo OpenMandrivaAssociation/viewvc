@@ -77,9 +77,10 @@ Here are some of the additional features of ViewVC:
 
 # fix paths in configuration
 %{__perl} -pi \
-  -e 's|^#templates/|%{_datadir}/%{name}/templates/|g;' \
+  -e 's|^#template_dir = .* |%{_datadir}/%{name}/templates/|g;' \
   -e 's|^#docroot = .*|docroot = /%{name}|;' \
-  -e 's|^cvsgraph_conf = .*|cvsgraph_conf = %{_sysconfdir}/%{name}/cvsgraph.conf|;' \
+  -e 's|^#cvsgraph_conf = .*|cvsgraph_conf = %{_sysconfdir}/%{name}/cvsgraph.conf|;' \
+  -e 's|^#mime_types_files = .*|mime_types_files = %{_sysconfdir}/%{name}/mimetypes.conf, %{_sysconfdir}/httpd/conf/mime.types|;' \
   %{buildroot}%{_datadir}/%{name}/viewvc.conf
 
 # install config to sysconf directory
@@ -88,6 +89,8 @@ Here are some of the additional features of ViewVC:
 %{__rm} -f %{buildroot}%{_datadir}/%{name}/viewvc.conf
 %{__install} -m 644 %{buildroot}%{_datadir}/%{name}/cvsgraph.conf %{buildroot}%{_sysconfdir}/%{name}/cvsgraph.conf
 %{__rm} -f %{buildroot}%{_datadir}/%{name}/cvsgraph.conf
+%{__install} -m 644 %{buildroot}%{_datadir}/%{name}/mimetypes.conf %{buildroot}%{_sysconfdir}/%{name}/mimetypes.conf
+%{__rm} -f %{buildroot}%{_datadir}/%{name}/mimetypes.conf
 
 # move static files under %{_var}/www
 %{__mv} %{buildroot}%{_datadir}/%{name}/templates/docroot %{buildroot}%{_var}/www/%{name}
