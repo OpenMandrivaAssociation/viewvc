@@ -77,7 +77,7 @@ Here are some of the additional features of ViewVC:
 
 # fix paths in configuration
 %{__perl} -pi \
-  -e 's|^#template_dir = .* |%{_datadir}/%{name}/templates/|g;' \
+  -e 's|^#template_dir = .*|template_dir = %{_datadir}/%{name}/templates/|g;' \
   -e 's|^#docroot = .*|docroot = /%{name}|;' \
   -e 's|^#cvsgraph_conf = .*|cvsgraph_conf = %{_sysconfdir}/%{name}/cvsgraph.conf|;' \
   -e 's|^#mime_types_files = .*|mime_types_files = %{_sysconfdir}/%{name}/mimetypes.conf, %{_sysconfdir}/httpd/conf/mime.types|;' \
