@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.1.3
-Release:        %mkrel 2
+Release:        %mkrel 3
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -136,10 +136,14 @@ EOF
 %{__rm} -rf %{buildroot}
 
 %post
-%{_post_webapp}
+%if %mdkversion < 201010
+%_post_webapp
+%endif
 
 %postun
-%{_postun_webapp}
+%if %mdkversion < 201010
+%_postun_webapp
+%endif
 
 %files
 %defattr(-,root,root)
