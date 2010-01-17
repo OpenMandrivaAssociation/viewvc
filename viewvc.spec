@@ -7,7 +7,6 @@ License:        BSD
 Group:          System/Servers
 URL:            http://www.viewvc.org/
 Source0:        http://viewvc.tigris.org/files/documents/3330/46029/%name-%version.tar.gz
-Source1:        %{name}.README.mdv
 Patch0:         %{name}-tools.patch
 Patch1:         %{name}-1.1.0-config.patch
 Requires:       apache
@@ -52,7 +51,6 @@ Here are some of the additional features of ViewVC:
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p0 -b .config
-%{__cp} -a %{SOURCE1} README.mdv
 
 %build
 
@@ -131,6 +129,32 @@ EOF
 
 # set mode 755 on executable scripts
 %{__grep} -rl '^#!' %{buildroot}%{_datadir}/%{name} | %{_bindir}/xargs %{__chmod} 755
+
+cat >README.mdv <<EOF
+Mandriva RPM specific notes
+===========================
+
+Setup
+-----
+The setup used here differs from default one in order to achieve better FHS
+compliance:
+
+- the files accessible from the web are in /var/www/cgi-bin
+- the files not accessible from the web are in /usr/share/viewvc
+- the configuration file is located at /etc/viewvc/viewvc.conf
+
+Post-installation
+-----------------
+You have manually to create the MySQL database if you want to use query mode.
+
+Additional useful packages
+--------------------------
+- cvs and rcs provide a web interface for CVS repositories
+- python-svn provides a web interface for SVN repositories
+- MySQL-python and a MySQL database are needed for query mode
+- apache-mod_python, will be accessible at http://localhost/viewvc-mp (instead
+  of the cgi files)
+EOF
 
 %clean
 %{__rm} -rf %{buildroot}
