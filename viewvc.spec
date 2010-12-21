@@ -1,12 +1,12 @@
 Name:           viewvc
-Version:        1.1.7
+Version:        1.1.8
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
 Group:          System/Servers
 URL:            http://www.viewvc.org/
-Source0:        http://viewvc.tigris.org/files/documents/3330/46029/%name-%version.tar.gz
+Source0:        http://viewvc.tigris.org/files/documents/3330/48659/%name-%version.tar.gz
 Patch0:         %{name}-tools.patch
 Patch1:         %{name}-1.1.0-config.patch
 Requires:       apache
