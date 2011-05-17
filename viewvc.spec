@@ -1,5 +1,5 @@
 Name:           viewvc
-Version:        1.1.9
+Version:        1.1.11
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
