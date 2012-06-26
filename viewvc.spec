@@ -95,7 +95,7 @@ Here are some of the additional features of ViewVC:
 
 # compile the python files
 %{_bindir}/find %{buildroot}%{_datadir}/%{name}/lib -type f -name "*.pyc" | %{_bindir}/xargs %{__rm}
-%{__python} -O %{_libdir}/python%{pyver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
+%{__python} -O %{_libdir}/python%{py_ver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
 
 # apache configuration
 %{__mkdir_p} %{buildroot}%{_webappconfdir}
