@@ -1,5 +1,6 @@
 Name:           viewvc
 Version:        1.1.15
+%define subrel	1
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
@@ -8,16 +9,17 @@ Group:          System/Servers
 URL:            http://www.viewvc.org/
 Source0:        http://viewvc.tigris.org/files/documents/3330/48659/%name-%version.tar.gz
 Patch0:         %{name}-tools.patch
-Patch1:         %{name}-1.1.0-config.patch
+Patch1:         %{name}-1.1.12-config.patch
+Patch2:		viewvc-1.1.5-CVE-2012-4533-xss.patch
 Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
 BuildRequires:  python
 Requires:       python
+Suggests:	python-svn
 Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ViewVC is a browser interface for CVS and Subversion version control 
@@ -51,6 +53,7 @@ Here are some of the additional features of ViewVC:
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p0 -b .config
+%patch2 -p1 -b .CVE-2012-4533-xss
 
 %build
 
@@ -95,7 +98,7 @@ Here are some of the additional features of ViewVC:
 
 # compile the python files
 %{_bindir}/find %{buildroot}%{_datadir}/%{name}/lib -type f -name "*.pyc" | %{_bindir}/xargs %{__rm}
-%{__python} -O %{_libdir}/python%{py_ver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
+%{__python} -O %{_libdir}/python%{pyver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
 
 # apache configuration
 %{__mkdir_p} %{buildroot}%{_webappconfdir}
@@ -130,8 +133,8 @@ EOF
 # set mode 755 on executable scripts
 %{__grep} -rl '^#!' %{buildroot}%{_datadir}/%{name} | %{_bindir}/xargs %{__chmod} 755
 
-cat >README.mdv <<EOF
-Mandriva RPM specific notes
+cat >README.mga <<EOF
+%_real_vendor RPM specific notes
 ===========================
 
 Setup
@@ -159,21 +162,13 @@ EOF
 %clean
 %{__rm} -rf %{buildroot}
 
-%post
-%if %mdkversion < 201010
-%_post_webapp
-%endif
-
-%postun
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
-
 %files
 %defattr(-,root,root)
-%doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mdv docs/
+%doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mga docs/
 %config(noreplace) %{_sysconfdir}/%{name}
 %config(noreplace) %{_webappconfdir}/%{name}.conf
 %{_datadir}/%{name}
 %{_var}/www/cgi-bin/*.cgi
 %{_var}/www/%{name}
+
+
