@@ -1,0 +1,49 @@
+--- viewvc-1.1.1/bin/make-database.tools	2009-03-18 17:45:10.000000000 +0100
++++ viewvc-1.1.1/bin/make-database	2009-06-05 11:11:19.000000000 +0200
+@@ -46,15 +46,15 @@
+ CREATE TABLE checkins (
+   type enum('Change','Add','Remove'),
+   ci_when datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+-  whoid mediumint(9) DEFAULT '0' NOT NULL,
+-  repositoryid mediumint(9) DEFAULT '0' NOT NULL,
+-  dirid mediumint(9) DEFAULT '0' NOT NULL,
+-  fileid mediumint(9) DEFAULT '0' NOT NULL,
++  whoid mediumint(9)  NOT NULL,
++  repositoryid mediumint(9)  NOT NULL,
++  dirid mediumint(9)  NOT NULL,
++  fileid mediumint(9)  NOT NULL,
+   revision varchar(32) binary DEFAULT '' NOT NULL,
+   stickytag varchar(255) binary DEFAULT '' NOT NULL,
+-  branchid mediumint(9) DEFAULT '0' NOT NULL,
+-  addedlines int(11) DEFAULT '0' NOT NULL,
+-  removedlines int(11) DEFAULT '0' NOT NULL,
++  branchid mediumint(9)  NOT NULL,
++  addedlines int(11)  NOT NULL,
++  removedlines int(11)  NOT NULL,
+   descid mediumint(9),
+   UNIQUE repositoryid (repositoryid,dirid,fileid,revision),
+   KEY ci_when (ci_when),
+@@ -69,7 +69,7 @@
+ CREATE TABLE descs (
+   id mediumint(9) NOT NULL auto_increment,
+   description text,
+-  hash bigint(20) DEFAULT '0' NOT NULL,
++  hash bigint(20)  NOT NULL,
+   PRIMARY KEY (id),
+   KEY hash (hash)
+ ) TYPE=MyISAM;
+@@ -108,10 +108,10 @@
+ 
+ DROP TABLE IF EXISTS tags;
+ CREATE TABLE tags (
+-  repositoryid mediumint(9) DEFAULT '0' NOT NULL,
+-  branchid mediumint(9) DEFAULT '0' NOT NULL,
+-  dirid mediumint(9) DEFAULT '0' NOT NULL,
+-  fileid mediumint(9) DEFAULT '0' NOT NULL,
++  repositoryid mediumint(9)  NOT NULL,
++  branchid mediumint(9)  NOT NULL,
++  dirid mediumint(9)  NOT NULL,
++  fileid mediumint(9)  NOT NULL,
+   revision varchar(32) binary DEFAULT '' NOT NULL,
+   UNIQUE repositoryid (repositoryid,dirid,fileid,branchid,revision),
+   KEY repositoryid_2 (repositoryid),
