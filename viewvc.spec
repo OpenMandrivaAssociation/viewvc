@@ -1,6 +1,5 @@
 Name:           viewvc
 Version:        1.1.15
-%define subrel	1
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
@@ -9,17 +8,16 @@ Group:          System/Servers
 URL:            http://www.viewvc.org/
 Source0:        http://viewvc.tigris.org/files/documents/3330/48659/%name-%version.tar.gz
 Patch0:         %{name}-tools.patch
-Patch1:         %{name}-1.1.12-config.patch
-Patch2:		viewvc-1.1.5-CVE-2012-4533-xss.patch
+Patch1:         %{name}-1.1.0-config.patch
 Requires:       apache
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
 BuildRequires:  python
 Requires:       python
-Suggests:	python-svn
 Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ViewVC is a browser interface for CVS and Subversion version control 
@@ -53,7 +51,6 @@ Here are some of the additional features of ViewVC:
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p0 -b .config
-%patch2 -p1 -b .CVE-2012-4533-xss
 
 %build
 
@@ -98,7 +95,7 @@ Here are some of the additional features of ViewVC:
 
 # compile the python files
 %{_bindir}/find %{buildroot}%{_datadir}/%{name}/lib -type f -name "*.pyc" | %{_bindir}/xargs %{__rm}
-%{__python} -O %{_libdir}/python%{pyver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
+%{__python} -O %{_libdir}/python%{py_ver}/compileall.py %{buildroot}%{_datadir}/%{name}/lib
 
 # apache configuration
 %{__mkdir_p} %{buildroot}%{_webappconfdir}
@@ -133,8 +130,8 @@ EOF
 # set mode 755 on executable scripts
 %{__grep} -rl '^#!' %{buildroot}%{_datadir}/%{name} | %{_bindir}/xargs %{__chmod} 755
 
-cat >README.mga <<EOF
-%_real_vendor RPM specific notes
+cat >README.mdv <<EOF
+Mandriva RPM specific notes
 ===========================
 
 Setup
@@ -162,13 +159,126 @@ EOF
 %clean
 %{__rm} -rf %{buildroot}
 
+%post
+%if %mdkversion < 201010
+%_post_webapp
+%endif
+
+%postun
+%if %mdkversion < 201010
+%_postun_webapp
+%endif
+
 %files
 %defattr(-,root,root)
-%doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mga docs/
+%doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mdv docs/
 %config(noreplace) %{_sysconfdir}/%{name}
 %config(noreplace) %{_webappconfdir}/%{name}.conf
 %{_datadir}/%{name}
 %{_var}/www/cgi-bin/*.cgi
 %{_var}/www/%{name}
 
+
+%changelog
+* Tue Jun 26 2012 Oden Eriksson <oeriksson@mandriva.com> 0:1.1.15-1mdv2012.0
++ Revision: 806951
+- a python rpm macro vanished...
+- 1.1.15
+
+* Tue May 17 2011 Funda Wang <fwang@mandriva.org> 0:1.1.11-1
++ Revision: 675885
+- new version 1.1.11
+
+* Wed Mar 02 2011 Juan Luis Baptiste <juancho@mandriva.org> 0:1.1.9-1
++ Revision: 641297
+- Updated to 1.1.9
+
+  + Michael Scherer <misc@mandriva.org>
+    - update to 1.1.8
+
+* Fri Sep 10 2010 Funda Wang <fwang@mandriva.org> 0:1.1.7-1mdv2011.0
++ Revision: 577118
+- new version 1.1.7
+
+* Tue Mar 30 2010 Oden Eriksson <oeriksson@mandriva.com> 0:1.1.5-1mdv2010.1
++ Revision: 528953
+- 1.1.5
+
+* Thu Mar 11 2010 Oden Eriksson <oeriksson@mandriva.com> 0:1.1.4-1mdv2010.1
++ Revision: 517984
+- 1.1.4
+
+* Sun Jan 17 2010 Guillaume Rousse <guillomovitch@mandriva.org> 0:1.1.3-3mdv2010.1
++ Revision: 492703
+- use herein document instead of external source for README.mdv
+- rely on filetrigger for reloading apache configuration begining with 2010.1, rpm-helper macros otherwise
+
+* Thu Jan 07 2010 Oden Eriksson <oeriksson@mandriva.com> 0:1.1.3-2mdv2010.1
++ Revision: 487113
+- added mod_python support
+- whoops, really fix path to templates
+- limit access to the cgi files per default
+- more config fixes
+- package mod_python files
+- fix path to templates
+
+* Wed Dec 30 2009 Frederik Himpe <fhimpe@mandriva.org> 0:1.1.3-1mdv2010.1
++ Revision: 484041
+- Update to new version 1.1.3
+
+* Wed Aug 12 2009 Funda Wang <fwang@mandriva.org> 0:1.1.2-1mdv2010.0
++ Revision: 415260
+- new version 1.1.2
+
+* Fri Jun 05 2009 Funda Wang <fwang@mandriva.org> 0:1.1.1-1mdv2010.0
++ Revision: 383002
+- update tools patch
+- New version 1.1.1
+
+* Sun Nov 30 2008 David Walluck <walluck@mandriva.org> 0:1.1.0-0.beta1.1mdv2009.1
++ Revision: 308328
+- 1.1.0
+
+* Sat Oct 18 2008 David Walluck <walluck@mandriva.org> 0:1.0.7-1mdv2009.1
++ Revision: 295155
+- remove obsolete patches
+- 1.0.7
+
+* Thu Sep 18 2008 Frederik Himpe <fhimpe@mandriva.org> 0:1.0.5-5mdv2009.0
++ Revision: 285705
+- Add patch from upstream svn fixing a small security problem
+  (http://viewvc.tigris.org/issues/show_bug.cgi?id=354)
+
+* Sun Aug 03 2008 Thierry Vignaud <tv@mandriva.org> 0:1.0.5-4mdv2009.0
++ Revision: 261852
+- rebuild
+
+* Wed Jul 30 2008 Thierry Vignaud <tv@mandriva.org> 0:1.0.5-3mdv2009.0
++ Revision: 255528
+- rebuild
+
+* Tue Mar 04 2008 Frederik Himpe <fhimpe@mandriva.org> 0:1.0.5-1mdv2008.1
++ Revision: 178842
+- New upstream bug and security fix release
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Wed Aug 22 2007 Guillaume Rousse <guillomovitch@mandriva.org> 0:1.0.4-3mdv2008.0
++ Revision: 69124
+- requires python, for cgi module
+
+* Fri Jun 01 2007 David Walluck <walluck@mandriva.org> 0:1.0.4-2mdv2008.0
++ Revision: 33680
+- version explicit Obsoletes
+- fix patch specifying config file location
+- remove epoch from the build root
+- update README.mdv a bit
+
+* Tue Apr 17 2007 David Walluck <walluck@mandriva.org> 0:1.0.4-1mdv2008.0
++ Revision: 14167
+- 1.0.4
 

@@ -1,0 +1,12 @@
+--- lib/viewvc.py	2012-06-22 20:43:12.000000000 +0200
++++ lib/viewvc.py.oden	2012-06-26 08:27:09.974475421 +0200
+@@ -4584,8 +4584,7 @@ def load_config(pathname=None, server=No
+   # default.
+   pathname = (env_pathname
+               or pathname
+-              or os.path.join(os.path.dirname(os.path.dirname(__file__)),
+-                              "viewvc.conf"))
++              or '/etc/viewvc/viewvc.conf')
+ 
+   # Load the configuration!
+   cfg = config.Config()
