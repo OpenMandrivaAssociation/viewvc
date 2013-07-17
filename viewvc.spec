@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.1.15
-Release:        3
+Release:        4
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
@@ -17,7 +17,6 @@ Requires:       python
 Obsoletes:      viewcvs < %{epoch}:%{version}-%{release}
 Provides:       viewcvs = %{epoch}:%{version}-%{release}
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 ViewVC is a browser interface for CVS and Subversion version control 
@@ -55,7 +54,6 @@ Here are some of the additional features of ViewVC:
 %build
 
 %install
-%{__rm} -rf %{buildroot}
 %{__python} ./viewvc-install --destdir=%{buildroot} --prefix=%{_datadir}/%{name}
 
 # remove uneeded files
@@ -105,13 +103,11 @@ Here are some of the additional features of ViewVC:
 Alias /%{name} %{_var}/www/%{name}
 
 <Directory %{_var}/www/%{name}>
-    Allow from all
+    Require all granted
 </Directory>
 
 <LocationMatch "^/cgi-bin/(query|viewvc).cgi">
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1
+    Require local granted
     ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf"
 </LocationMatch>
 
@@ -120,8 +116,7 @@ Alias /%{name} %{_var}/www/%{name}
     <Directory %{_datadir}/%{name}/bin/mod_python>
         AddHandler python-program .py
         PythonHandler handler
-        Order allow,deny
-        Allow from 127.0.0.1
+        Require local granted
         ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf"
     </Directory>
 </IfModule>
@@ -156,13 +151,7 @@ Additional useful packages
   of the cgi files)
 EOF
 
-%clean
-%{__rm} -rf %{buildroot}
-
-
-
 %files
-%defattr(-,root,root)
 %doc CHANGES COMMITTERS INSTALL LICENSE.html README README.mdv docs/
 %config(noreplace) %{_sysconfdir}/%{name}
 %config(noreplace) %{_webappconfdir}/%{name}.conf
