@@ -1,6 +1,6 @@
 Name:           viewvc
 Version:        1.1.15
-Release:        4
+Release:        5
 Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
