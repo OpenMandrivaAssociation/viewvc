@@ -5,7 +5,7 @@ Epoch:          0
 Summary:        Browser interface for CVS and Subversion version control repositories
 License:        BSD
 Group:          System/Servers
-URL:            http://www.viewvc.org/
+URL:            https://www.viewvc.org/
 Source0:        http://viewvc.tigris.org/files/documents/3330/48659/%name-%version.tar.gz
 Patch0:         %{name}-tools.patch
 Patch1:         %{name}-1.1.0-config.patch
